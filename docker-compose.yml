@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  fake-db-main:
+    container_name: fake-db-main
+    build:
+      context: ./cmd/fake_db
+      dockerfile: Dockerfile
+
+  fake-db-user:
+    container_name: fake-db-user
+    build:
+      context: ./cmd/fake_db
+      dockerfile: Dockerfile
+
+  fake-server-user:
+    container_name: fake-server-user
+    build:
+      context: ./cmd/fake_server
+      dockerfile: Dockerfile
+    environment:
+      - "DATABASE_URL=http://fake-db-user:3333"
+      - "REDIRECT_URL=http://fake-server-main:4444"
+
+  fake-server-main:
+    container_name: fake-server-main
+    build:
+      context: ./cmd/fake_server
+      dockerfile: Dockerfile
+    ports:
+      - "4444:4444"
+    environment:
+      - "DATABASE_URL=http://fake-db-main:3333"
+      - "REDIRECT_URL=http://fake-server-user:4444"
