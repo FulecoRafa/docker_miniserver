@@ -6,3 +6,7 @@ server:
 
 up:
 	docker-compose up --build
+
+# make curl request to test
+test:
+	curl http://localhost:4444/redirect
