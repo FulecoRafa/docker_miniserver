@@ -3,3 +3,6 @@ db:
 
 server:
 	go run cmd/fake_server/main.go
+
+up:
+	docker-compose up --build
